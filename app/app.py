@@ -23,10 +23,16 @@ while True:
         continue
     # calculate the difference between the first frame and the current frame of the image
     delta_frame = cv2.absdiff(first_frame, gray_color)
-    # show a window
+
+    # implementing the treshold frame
+    thresh_frame = cv2.threshold(
+        delta_frame, 30, 255, cv2.THRESH_BINARY)[1]
+    # displaying the gray frame
     cv2.imshow("Gray Frame", gray_color)
     # displaying the delta frame
     cv2.imshow("Delta Frame", delta_frame)
+    # displaying the thresh_delta frame
+    cv2.imshow("Threshold Frame", thresh_frame)
 
     # wait time in millisecond
     key = cv2.waitKey(1)
