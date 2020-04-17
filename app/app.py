@@ -6,6 +6,8 @@ first_frame = None
 
 # create an object with the method that triggers a video capture object
 # param 0 means (index 0)it will use the webcam on the computer but you put also a path
+# Using cv2.CAP_DSHOW removes the warning, but slows down my frame rate
+# video = cv2.VideoCapture(0, cv2.CAP_DSHOW)
 video = cv2.VideoCapture(0)
 
 while True:
@@ -32,14 +34,16 @@ while True:
 
     # contour detection
     # find contours method find the contours in my image and store them in a tuple
-    (_, cnts, _) = cv2.findContours(thresh_frame.copy(),
-                                    cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-    for contour in cnts:
+    # (_, cnts, _) = cv2.findContours(thresh_frame.copy(),
+    #                                 cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    contours, hierachy = cv2.findContours(
+        thresh_frame.copy(), cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+    for contour in contours:
         # if the area has less than 1000 pixels, go to the next contour
         if cv2.contourArea(contour) < 1000:
             continue
         # the draw contours method draws contours in an image
-        (x, y, w, h) = cv2.boundRect(contour)
+        (x, y, w, h) = cv2.boundingRect(contour)
         # draw the rectangle
         cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 3)
 
