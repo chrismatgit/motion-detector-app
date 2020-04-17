@@ -22,8 +22,11 @@ while True:
         # go to the begining of the loop
         continue
     # calculate the difference between the first frame and the current frame of the image
+    delta_frame = cv2.absdiff(first_frame, gray_color)
     # show a window
-    cv2.imshow("Capturing", gray_color)
+    cv2.imshow("Gray Frame", gray_color)
+    # displaying the delta frame
+    cv2.imshow("Delta Frame", delta_frame)
 
     # wait time in millisecond
     key = cv2.waitKey(1)
